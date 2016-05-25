@@ -45,10 +45,7 @@ class ScalaDriverTest extends JUnitSuite with Matchers {
   @Test def writeConcern {
     val collection = db.getCollection("users").withWriteConcern(WriteConcern.UNACKNOWLEDGED)
     val doc = Document("""{name: 'UNACKNOWLEDGED'}""")
-    val observable = collection.insertOne(doc)
-    val future = observable.toFuture
-    val res = Await.result(future, 100 millis)
-    res.head should be(Completed())
+    collection.insertOne(doc) should replyCompleted
   }
 
   private def replyCompleted = new org.scalatest.matchers.Matcher[Observable[Completed]] {

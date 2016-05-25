@@ -18,19 +18,6 @@ class ScalaDriverTest extends JUnitSuite with Matchers {
   val mongoClient: MongoClient = MongoClient("mongodb://localhost")
   val db = mongoClient.getDatabase("test")
 
-  class PrintObserver[T]() extends Observer[T] {
-    val prefix = "[PrintObserver]"
-    override def onComplete(): Unit = {
-      println(s"$prefix onComplete()")
-    }
-    override def onError(e: Throwable): Unit = {
-      println(s"$prefix onError($e)")
-    }
-    override def onNext(result: T): Unit = {
-      println(s"$prefix onNext($result)")
-    }
-  }
-
   @Test def dbName {
     db.name should be("test")
   }
